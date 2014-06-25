@@ -1,3 +1,27 @@
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-52219345-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+console.log("running");
+function onPlayerReady(event) {
+  console.log("player ready");
+  event.target.mute();
+  // Anything else you want to do, like start playback...
+}
+
+
+function onYouTubePlayerReady(playerid) {
+  console.log('ready');
+};
+</script>
 <h1 class="padded">how many people has luis suarez bitten on international TV?</h1>
 
 <h1 class="huge">3</h1>
@@ -27,12 +51,12 @@
 
 <h3 class="indent">Branislav Ivanovic:</h3>
 <div class="padded">
-<iframe width="560" height="315" src="//www.youtube.com/embed/GopdzPxE2gk?autoplay=1" frameborder="0" allowfullscreen></iframe>
+<div id='ivanovicVid'></div>
 </div>
 
 <h3 class="indent">Otman Bakkal:</h3>
 <div class="padded">
-  <iframe width="560" height="315" src="//www.youtube.com/embed/vJi65C9O67s?autoplay=1" frameborder="0" allowfullscreen></iframe>
+  <div id="bakkalVid"></div>
 </div>
 
 <div class="padded">
@@ -45,17 +69,41 @@
 .indent { padding-left: 40px; }
 </style>
 
-<script type="text/javascript">
+<script>
+  var tag = document.createElement('script');
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-52219345-1']);
-  _gaq.push(['_trackPageview']);
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('ivanovicVid', {
+      height: '390',
+      width: '640',
+      videoId: 'GopdzPxE2gk',
+      events: {
+        'onReady': ivanovic
+      }
+    });
+    player = new YT.Player('bakkalVid', {
+      height: '390',
+      width: '640',
+      videoId: 'vJi65C9O67s',
+      events: {
+        'onReady': onPlayerReady
+      }
+    });
+  }
 
+  function ivanovic(event) {
+    event.target.setVolume(50);
+    event.target.playVideo();
+  }
+
+  // 4. The API will call this function when the video player is ready.
+  function onPlayerReady(event) {
+    event.target.mute();
+    event.target.playVideo();
+  }
 </script>
-
